@@ -1,0 +1,9 @@
+- name: Print hyperfoil_controller_host
+  debug:
+    msg: "Controller is {{ hyperfoil_controller_host | default(ansible_hostname) }}"
+
+- ansible.builtin.include_tasks: setup.yml
+  when: operation is undefined or operation == "setup"
+
+- ansible.builtin.include_tasks: shutdown.yml
+  when: operation is defined and operation == "shutdown"

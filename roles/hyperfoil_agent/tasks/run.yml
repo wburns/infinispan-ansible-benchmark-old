@@ -1,0 +1,5 @@
+- name: Import hyperfoil test to run
+  ansible.builtin.import_role:
+    name: hyperfoil.hyperfoil_test
+      #  vars:
+      # test_name: hotrod-benchmark
