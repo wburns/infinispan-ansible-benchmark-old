@@ -1,0 +1,4 @@
+- hosts:
+  - hyperfoil_controller
+  roles:
+  - hyperfoil.hyperfoil_shutdown

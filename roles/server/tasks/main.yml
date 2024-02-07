@@ -1,0 +1,14 @@
+    - debug:
+        msg: "Server Operation is {{ operation | default('DEFAULT') }}"
+
+    - name: "Initializing server requirements"
+      ansible.builtin.include_tasks: init.yml
+      when: operation is undefined or operation == "init"
+
+    - name: "Running server"
+      ansible.builtin.include_tasks: run.yml
+      when: operation is undefined or operation == "run"
+
+    - name: "Shutting down server"
+      ansible.builtin.include_tasks: shutdown.yml
+      when: operation is defined and operation == "shutdown"

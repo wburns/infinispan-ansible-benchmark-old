@@ -1,0 +1,5 @@
+  - name: Download JFR files
+    ansible.builtin.fetch:
+      src: "/tmp/jfr/server-{{ inventory_hostname }}.jfr"
+      dest: "./"
+      flat: true

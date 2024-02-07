@@ -1,0 +1,3 @@
+- name: Do client stuff
+  ansible.builtin.debug:
+    msg: "Did it!"
