@@ -1,0 +1,52 @@
+name: hotrod-benchmark
+# Just connect to first server, it will give us the whole list
+hotrod:
+- uri: hotrod://{{ user }}:{{ pass }}@{{ groups['server'][0] }}:11222
+# List of agents the Controller should deploy
+agents:
+{% for agent in groups[hyperfoil_agent_group] %}
+  {{ agent }}: {{ hostvars[agent]['inventory_hostname'] }}:{{ hyperfoil_agent_port }}
+{% endfor %}
+phases:
+- rampupPut:
+    increasingRate:
+      duration: 10s
+      initialUsersPerSec: 10
+      targetUsersPerSec: 20
+      maxSessions: 300
+      scenario: &put
+      - putData:
+        - randomInt: cacheKey <- 1 .. 4000
+        - randomUUID: cacheValue
+        - hotrodRequest:
+            put: {{ cache_name }}
+            key: key-${cacheKey}
+            value: value-${cacheValue}
+- rampupGet:
+    increasingRate:
+      duration: 10s
+      initialUsersPerSec: 10
+      targetUsersPerSec: 20
+      maxSessions: 300
+      scenario: &get
+      - getData:
+        - randomInt: cacheKey <- 1 .. 4000
+        - randomUUID: cacheValue
+        - hotrodRequest:
+            put: {{ cache_name }}
+            key: key-${cacheKey}
+            value: value-${cacheValue}
+- doPut:
+    constantRate:
+      startAfter: rampupPut
+      duration: 5m
+      usersPerSec: 1000
+      maxSessions: 1100
+      scenario: *put
+- doGet:
+    constantRate:
+      startAfter: rampupGet
+      duration: 5m
+      usersPerSec: 4000
+      maxSessions: 4100
+      scenario: *get

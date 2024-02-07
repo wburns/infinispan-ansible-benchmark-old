@@ -1,8 +1,8 @@
-- hosts: hyperfoil_agent
+- hosts: hyperfoil_controller
   tasks:
     - name: Print hyperfoil_controller_host
       debug:
-        msg: "Controller is {{ hyperfoil_controller_host }}"
+        msg: "Controller is {{ hyperfoil_controller_host | default(ansible_hostname) }}"
 
 - hosts: hyperfoil_agent
   tasks:
@@ -20,7 +20,7 @@
   roles:
   - hyperfoil.hyperfoil_test
   vars:
-    test_name: my_custom_file
+    test_name: hotrod-benchmark
 
 - hosts: hyperfoil_agent
   tasks:
