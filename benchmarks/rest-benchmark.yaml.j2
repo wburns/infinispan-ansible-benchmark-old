@@ -1,0 +1,18 @@
+name: rest-benchmark
+http:
+{% for agent in groups[server] %}
+- host: http://{{ agent }}:11222
+{% endfor %}
+# List of agents the Controller should deploy
+agents:
+{% for agent in groups[hyperfoil_agent_group] %}
+  {{ agent }}: {{ hostvars[agent]['inventory_hostname'] }}:{{ hyperfoil_agent_port }}
+{% endfor %}
+phases:
+- example:
+  atOnce:
+    users: 1
+    scenario:
+    - test:
+      - httpRequest:
+        GET: /
