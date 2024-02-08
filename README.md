@@ -18,6 +18,7 @@ Ansible managed nodes require sshd and public key
 Roles
 ------------
 server: Manages starting and stopping Infinispan servers. Utilizes the `server` inventory group to determine nodes
+- server_image: allows providing a specific image, default is: quay.io/infinispan/server:latest
 hyperfoil_controller: Manages starting and stopping the hyperfoil controller node. Requires a singleton in the `hyperfoil_controller` inventory group. It is recommended for this to be the localhost `ansible_connnection=local`.
 hyperfoil_agent: Manages deployment and running of Hyperfoil agent nodes. Utilizes the `hyperfoil_agent` inventory group to determine nodes.
 

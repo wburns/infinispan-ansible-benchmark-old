@@ -1,1 +1,2 @@
 cache_file: files/cache.xml
+server_image: quay.io/infinispan/server
