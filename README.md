@@ -7,6 +7,10 @@ Requirements
 ------------
 
 Ansible controller node requires ansible and jmespath to be installed
+ - Also need the 3 hyperfoil roles
+   - ansible-galaxy install hyperfoil.hyperfoil_setup
+   - ansible-galaxy install hyperfoil.hyperfoil_shutdown
+   - ansible-galaxy install hyperfoil.hyperfoil_test
 Ansible managed nodes require sshd and public key
 - Infinispan Server nodes will install podman if a sudoer, otherwise must be installed manually
 - Hyperfoil nodes will install latest open jdk 17 if a sudoer, otherwise must be installed manually
