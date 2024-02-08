@@ -7,7 +7,7 @@
 
 - name: "Retrieve stats"
   ansible.builtin.include_tasks: retrieve_stats.yml
-  when: operation is undefined or operation == "stats"
+  when: operation is defined and operation == "stats"
 
 - ansible.builtin.include_tasks: shutdown.yml
   when: operation is defined and operation == "shutdown"
