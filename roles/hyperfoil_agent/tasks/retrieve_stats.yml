@@ -1,6 +1,0 @@
-- name: Find number of requests
-  set_fact:
-    test_requests: "{{ lookup('csvfile', 'my_custom_file file=/tmp/hyperfoil/workspace/run/' + test_runid + '/stats/total.csv col=2 delimiter=,')}}"
-- name: Print number of requests
-  debug:
-    msg: "Executed {{ test_requests }} requests."

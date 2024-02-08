@@ -4,5 +4,9 @@
 
 - ansible.builtin.import_playbook: hyperfoil_controller.yml
   vars:
+    operation: stats
+
+- ansible.builtin.import_playbook: hyperfoil_controller.yml
+  vars:
     operation: shutdown
 
