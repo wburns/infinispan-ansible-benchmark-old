@@ -9,6 +9,10 @@
       ansible.builtin.include_tasks: run.yml
       when: operation is undefined or operation == "run"
 
+    - name: "Creating cache"
+      ansible.builtin.include_tasks: create_cache.yml
+      when: operation is undefined or operation == "create_cache"
+
     - name: "Shutting down server"
       ansible.builtin.include_tasks: shutdown.yml
       when: operation is defined and operation == "shutdown"
