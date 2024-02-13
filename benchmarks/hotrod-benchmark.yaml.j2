@@ -6,6 +6,7 @@ hotrod:
 agents:
 {% for agent in groups[hyperfoil_agent_group] %}
   {{ agent }}: {{ hostvars[agent]['inventory_hostname'] }}:{{ hyperfoil_agent_port }}
+    extras: {{ java_options | default(agent_java_args | default('')) }}
 {% endfor %}
 phases:
 - rampupPut:

@@ -1,1 +1,10 @@
 test_name: hotrod-benchmark
+agent_java_args: "{{ undef() }}"
+hyperfoil_controller_group: hyperofoil-controller
+hyperfoil_controller_host: "{{ undef{} }}"
+hyperfoil_controller_port: "{{ undef{} }}"
+hyperfoil_controller_protocol: http
+hyperfoil_validate_certs: true
+hyperfoil_deployer: ssh
+hyperfoil_agent_group: hyperfoil-agent
+hyperfoil_agent_port: 22
