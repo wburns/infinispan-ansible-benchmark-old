@@ -3,3 +3,4 @@
       src: "/tmp/jfr/server-{{ inventory_hostname }}.jfr"
       dest: "./"
       flat: true
+    when: capture_jfr

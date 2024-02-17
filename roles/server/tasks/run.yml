@@ -1,13 +1,15 @@
     - name: Enable JFR
       set_fact:
-        java_options: "{{ java_options | default('') + '-XX:StartFlightRecording:filename=/tmp/jfr/server-' + inventory_hostname + '.jfr'"
+        # TODO: change this to allow overriding in case if java_options is defined as inventory
+        java_options: "{{ '-XX:StartFlightRecording:filename=/tmp/jfr/server-' + inventory_hostname + '.jfr' }}"
         volume_mount: "/tmp/jfr:/tmp/jfr"
       when: capture_jfr is defined and capture_jfr
 
-    - name: Apply server_java_args
-      set_fact:
-        java_options: "{{ java_options + server_java_args if java_options is defined else server_java_args }}"
-      when: server_java_args is defined
+        # TODO: not working yet..
+        #- name: Apply server_java_args
+        #set_fact:
+        #java_options: "{{ java_options + server_java_args if java_options is defined else server_java_args }}"
+        #when: server_java_args is defined
 
     - name: Start Infinispan container
       containers.podman.podman_container:
