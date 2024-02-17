@@ -18,6 +18,8 @@
         <Logger name="io.netty" level="INFO"/>
         <!-- Infinispan is too noisy with all those rebalances -->
         <Logger name="org.infinispan" level="WARN"/>
+        <!-- Agent classes are shaded and have different packages -->
+        <Logger name="shaded.org.infinispan" level="WARN"/>
 
         <Root level="INFO">
             <AppenderRef ref="STDOUT" level="TRACE"/>
