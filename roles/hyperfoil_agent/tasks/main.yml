@@ -4,4 +4,5 @@
 
 - name: "Running hyperfoil test"
   ansible.builtin.include_tasks: run.yml
+  run_once: true
   when: operation is undefined or operation == "run"
