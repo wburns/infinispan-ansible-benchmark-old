@@ -15,9 +15,9 @@ phases:
 - rampupPut:
     increasingRate:
       duration: 10s
-      initialUsersPerSec: 10
-      targetUsersPerSec: 20
-      maxSessions: 300
+      initialUsersPerSec: 1
+      targetUsersPerSec: 100
+      maxSessions: 100
       scenario: &put
       - putData:
         - randomInt: cacheKey <- 1 .. 4000
@@ -29,28 +29,26 @@ phases:
 - rampupGet:
     increasingRate:
       duration: 10s
-      initialUsersPerSec: 10
-      targetUsersPerSec: 20
-      maxSessions: 300
+      initialUsersPerSec: 2
+      targetUsersPerSec: 200
+      maxSessions: 200
       scenario: &get
       - getData:
         - randomInt: cacheKey <- 1 .. 4000
-        - randomUUID: cacheValue
         - hotrodRequest:
-            put: {{ cache_name }}
+            get: {{ cache_name }}
             key: key-${cacheKey}
-            value: value-${cacheValue}
 - doPut:
     constantRate:
       startAfter: rampupPut
-      duration: 5m
-      usersPerSec: 1000
-      maxSessions: 1100
+      duration: 2m
+      usersPerSec: 20
+      maxSessions: 10
       scenario: *put
 - doGet:
     constantRate:
       startAfter: rampupGet
-      duration: 5m
-      usersPerSec: 4000
-      maxSessions: 4100
+      duration: 2m
+      usersPerSec: 160
+      maxSessions: 80
       scenario: *get
