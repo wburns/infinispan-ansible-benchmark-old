@@ -1,4 +1,6 @@
 cache_file: files/cache.xml
 server_image: quay.io/infinispan/server
-server_java_args:
+server_java_args: "{{ undef() }}"
 capture_jfr: false
+server_configuration_file: "{{ undef() }}"
+server_tmp_dir: /tmp/infinispan-benchmark

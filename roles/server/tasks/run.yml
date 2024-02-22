@@ -1,15 +1,19 @@
     - name: Enable JFR
       set_fact:
         # TODO: change this to allow overriding in case if java_options is defined as inventory
-        java_options: "{{ '-XX:StartFlightRecording:filename=/tmp/jfr/server-' + inventory_hostname + '.jfr' }}"
-        volume_mount: "/tmp/jfr:/tmp/jfr"
+        java_options: "{{ '-XX:StartFlightRecording:filename=' + server_tmp_dir + '/jfr/server-' + inventory_hostname + '.jfr' }}"
       when: capture_jfr is defined and capture_jfr
 
-        # TODO: not working yet..
-        #- name: Apply server_java_args
-        #set_fact:
-        #java_options: "{{ java_options + server_java_args if java_options is defined else server_java_args }}"
-        #when: server_java_args is defined
+    - name: Apply server_java_args
+      set_fact:
+        java_options: "{{ java_options + server_java_args if java_options is defined else server_java_args }}"
+      when: server_java_args is defined
+
+    - name: Copy Infinispan Server file if present
+      ansible.builtin.copy:
+        src: "{{ server_configuration_file }}"
+        dest: "{{ server_tmp_dir }}"
+      when: server_configuration_file is defined
 
     - name: Start Infinispan container
       containers.podman.podman_container:
@@ -28,7 +32,9 @@
             #- 11222:11222
           JAVA_OPTIONS: "{{ java_options | default('') }}"
         volume:
-          - "{{ volume_mount | default('') }}"
+          - "{{ server_tmp_dir }}:{{ server_tmp_dir }}"
+        command:
+          - "{{ '-c ' + server_tmp_dir + '/' + server_configuration_file | basename if server_configuration_file is defined else '' }}"
 
     - name: Wait until server is up or print log
       block:
