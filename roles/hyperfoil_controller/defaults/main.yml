@@ -1,3 +1,5 @@
+# All of these are described at https://github.com/Hyperfoil/hyperfoil_setup
+
 hyperfoil_distribution: "{{ undef() }}"
 hyperfoil_version: "{{ undef() }}"
 hyperfoil_dir: "{{ undef() }}"
