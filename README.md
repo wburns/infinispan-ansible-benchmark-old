@@ -67,15 +67,15 @@ The three main playbooks directly reference the three roles of the same name. Th
 
 Internal Steps
 --------------
-All of the roles internally have the notion of the following "steps". Note that as mentioned above shutdown is not ran via explicit playbook invocation other than benchmark.
+All of the roles internally have the notion of the following "steps" that are controlled by the operation argument. Note that as mentioned above shutdown is not ran via explicit playbook invocation other than benchmark.
 
-# init
-# run
-# stats (hyperfoil_agent doesn't have this one)
-  # Generates stats output include JFR files which are automatically downloaded locally
-# shutdown (hyperfoil_agent doesn't have this one)
+* init
+* run
+* stats (hyperfoil_agent doesn't have this one)
+  * Generates stats output include JFR files which are automatically downloaded locally
+* shutdown (hyperfoil_agent doesn't have this one)
 
-Running a playbook will run the respective roles for each of these. If instead you want to run a subset you can use 
+Running a playbook will run the respective roles for each of these. If instead you want to run a subset you can use the operation argument as such `ansible-playbook -e operation=run`.
 
 
 
