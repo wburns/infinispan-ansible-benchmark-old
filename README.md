@@ -9,13 +9,13 @@ Requirements
 Ansible controller node requires ansible and jmespath to be installed
  - Also need the 3 hyperfoil roles
    - ansible-galaxy install hyperfoil.hyperfoil_setup
-     - ansible-galaxy install hyperfoil.hyperfoil_setup,0.19.0
+     - `ansible-galaxy install hyperfoil.hyperfoil_setup,0.19.0`
    - ansible-galaxy install hyperfoil.hyperfoil_shutdown
-     - ansible-galaxy install hyperfoil.hyperfoil_shutdown,0.19.0
+     - `ansible-galaxy install hyperfoil.hyperfoil_shutdown,0.19.0`
    - ansible-galaxy install hyperfoil.hyperfoil_test
-     - ansible-galaxy install hyperfoil.hyperfoil_test,0.19.0
+     - `ansible-galaxy install hyperfoil.hyperfoil_test,0.19.0`
 
-Ansible managed nodes require sshd and the ansible controller public key ioonstalled
+Ansible managed nodes require sshd and the ansible controller public key installed on them
 - Infinispan Server nodes will install podman if a sudoer, otherwise must be installed manually
 - Hyperfoil nodes will install latest open jdk 17 if a sudoer, otherwise must be installed manually
 
@@ -28,7 +28,7 @@ hyperfoil_agent: Manages deployment and running of Hyperfoil agent nodes. Utiliz
 
 Example Inventory
 ------------
-Here is an example inventory.ini file defining 3 Infinispan server nodes, a local hyperfoil contoller and 2 hyperfoil agent nodes
+Here is an example inventory.ini file defining 3 Infinispan server nodes, a local connection hyperfoil contoller and 2 hyperfoil agent nodes (replacing the host values with a resolvable hostname)
 ```ini
 [all:vars]
 user=myusername
@@ -64,6 +64,20 @@ The three main playbooks directly reference the three roles of the same name. Th
 * Server defaults are [main.yaml](roles/server/defaults/main.yml)
 * Hyperfoil Controller arguments are [main.yaml](roles/hyperfoil_controller/defaults/main.yml)
 * Hyperfoil agent arguments are [main.yaml](roles/hyperfoil_agent/defaults/main.yml)
+
+Internal Steps
+--------------
+All of the roles internally have the notion of the following "steps". Note that as mentioned above shutdown is not ran via explicit playbook invocation other than benchmark.
+
+# init
+# run
+# stats (hyperfoil_agent doesn't have this one)
+  # Generates stats output include JFR files which are automatically downloaded locally
+# shutdown (hyperfoil_agent doesn't have this one)
+
+Running a playbook will run the respective roles for each of these. If instead you want to run a subset you can use 
+
+
 
 License
 ------------
